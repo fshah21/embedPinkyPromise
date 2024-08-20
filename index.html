@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flutter Web Message Example</title>
+</head>
+<body>
+
+  <h1>Send Message to Flutter App</h1>
+  <button id="sendMessageButton">Send Message to Flutter</button>
+
+  <script>
+    (function () {
+      var script = document.createElement("script");
+      script.src = "https://pinky-promise-web-staging.web.app/build/web/flutter.js";
+      script.defer = true;
+
+      script.onload = function () {
+        console.log("Flutter script loaded");
+
+        // Verify the _flutter object
+        console.log("_flutter object:", window._flutter);
+
+        window.addEventListener("load", function () {
+          console.log("Page loaded");
+
+          if (window._flutter && window._flutter.loader) {
+            window._flutter.loader.loadEntrypoint({
+              serviceWorker: {
+                serviceWorkerVersion: null,
+              },
+              onEntrypointLoaded: function (engineInitializer) {
+                console.log("Entrypoint loaded");
+                engineInitializer.initializeEngine().then(function (appRunner) {
+                  console.log("Engine initialized");
+                  appRunner.runApp();
+                  console.log("Flutter app initialized");
+
+                  // Send a message after the app is initialized
+                  sendMessageToFlutterApp();
+                }).catch(function(error) {
+                  console.error("Error initializing Flutter app:", error);
+                });
+              },
+            });
+          } else {
+            console.error("_flutter.loader is not available");
+          }
+        });
+      };
+
+      script.onerror = function () {
+        console.error("Error loading Flutter script");
+      };
+
+      document.head.appendChild(script);
+    })();
+
+    // Function to send message to Flutter app
+    function sendMessageToFlutterApp() {
+      setTimeout(() => {
+        if (window.flutter) {
+          window.postMessage({
+            action: 'external_embed',
+            accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MWU2MzgzZS01YjVlLTQyMDMtOTRkMC0zN2JhNjgyZjViNjEiLCJpYXQiOjE3MjQxMzYxMTEsImV4cCI6MTcyNDEzNjE3MX0.Pe82RfscGiK3BIIm_0k5IGXaRc2Zf36o_9FiY6Pv7q0',
+            refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MWU2MzgzZS01YjVlLTQyMDMtOTRkMC0zN2JhNjgyZjViNjEiLCJpYXQiOjE3MjQxMzYxMTEsImV4cCI6MTc4NzIwODExMX0.bY7Bni0UR9amtV_kCMtwU3NNTT3M751Qh7q1SOrv3B8',
+            userId: '41e6383e-5b5e-4203-94d0-37ba682f5b61'
+          }, '*');
+          console.log("Message sent to Flutter app");
+        } else {
+          console.error("Flutter is not ready to receive messages");
+        }
+      }, 3000); // Adjust the timeout as necessary
+    }
+
+    // Add event listener to send message when the button is clicked
+    document.getElementById('sendMessageButton').addEventListener('click', function() {
+      sendMessageToFlutterApp();
+    });
+  </script>
+
+</body>
+</html>

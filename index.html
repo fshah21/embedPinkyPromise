@@ -84,8 +84,8 @@
         // Since the window load event might have already occurred, 
         // directly proceed with initializing the Flutter app.
         // Retrieve variables from local storage
-        var authToken = localStorage.getItem('authToken');
-        var userId = localStorage.getItem('userId');
+        var authToken = "testtoken";
+        var userId = "userid";
 
         // Load the main.dart.js
         _flutter.loader.loadEntrypoint({
@@ -96,14 +96,18 @@
             engineInitializer.initializeEngine({
               assetBase: assetBaseUrl
             }).then(function (appRunner) {
+              console.log("then asset");
               appRunner.runApp();
+              console.log("run app");
 
               // Send variables to the Flutter app
               window.postMessage({
-                action: 'setVariables',
+                action: 'external_embed',
                 authToken: authToken,
                 userId: userId,
               }, '*');
+
+              console.log("post message");
 
               // Optionally hide UI elements like the navigation bar and back button
               window.postMessage({

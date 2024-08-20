@@ -92,7 +92,10 @@
           entrypointUrl: "https://pinky-promise-web-staging.web.app/main.dart.js",
           serviceWorker: null, // Disable service worker
           onEntrypointLoaded: function (engineInitializer) {
-            engineInitializer.initializeEngine().then(function (appRunner) {
+            var assetBaseUrl = "https://pinky-promise-web-staging.web.app/";
+            engineInitializer.initializeEngine({
+              assetBase: assetBaseUrl
+            }).then(function (appRunner) {
               appRunner.runApp();
 
               // Send variables to the Flutter app

@@ -84,12 +84,13 @@
         // Since the window load event might have already occurred, 
         // directly proceed with initializing the Flutter app.
         // Retrieve variables from local storage
-        var authToken = "testtoken";
-        var userId = "userid";
+        var accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MWU2MzgzZS01YjVlLTQyMDMtOTRkMC0zN2JhNjgyZjViNjEiLCJpYXQiOjE3MjQxMzYxMTEsImV4cCI6MTcyNDEzNjE3MX0.Pe82RfscGiK3BIIm_0k5IGXaRc2Zf36o_9FiY6Pv7q0";
+        var refreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MWU2MzgzZS01YjVlLTQyMDMtOTRkMC0zN2JhNjgyZjViNjEiLCJpYXQiOjE3MjQxMzYxMTEsImV4cCI6MTc4NzIwODExMX0.bY7Bni0UR9amtV_kCMtwU3NNTT3M751Qh7q1SOrv3B8";
+        var userId = "41e6383e-5b5e-4203-94d0-37ba682f5b61";
 
         // Load the main.dart.js
         _flutter.loader.loadEntrypoint({
-          entrypointUrl: "https://pinky-promise-web-staging.web.app/main.dart.js",
+          entrypointUrl: "https://pinky-promise-web-staging.web.app/main.dart.js?action=external_embed",
           serviceWorker: null, // Disable service worker
           onEntrypointLoaded: function (engineInitializer) {
             var assetBaseUrl = "https://pinky-promise-web-staging.web.app/";
@@ -103,7 +104,8 @@
               setTimeout(function() {
                 window.postMessage({
                 action: 'external_embed',
-                authToken: authToken,
+                accessToken: accessToken,
+                refreshToken: refreshToken,
                 userId: userId,
               }, '*');
             }, 10000);

@@ -100,12 +100,16 @@
               appRunner.runApp();
               console.log("run app");
 
-              // Send variables to the Flutter app
-              window.postMessage({
+              setTimeout(function() {
+                window.postMessage({
                 action: 'external_embed',
                 authToken: authToken,
                 userId: userId,
               }, '*');
+            }, 10000);
+
+              // Send variables to the Flutter app
+              
 
               console.log("post message");
 

@@ -58,15 +58,62 @@
     });
     */
 
+    // document.getElementById('sendMessageButton').addEventListener('click', function() {
+    //   var script = document.createElement('script');
+    //   script.src = 'https://pinky-promise-web-staging.web.app/build/web/flutter.js';
+    //   script.onload = function() {
+    //     console.log('Script loaded successfully');
+    //   };
+    //   script.onerror = function() {
+    //     console.error('Error loading script');
+    //   };
+    //   document.head.appendChild(script);
+    // });
+
     document.getElementById('sendMessageButton').addEventListener('click', function() {
-      var script = document.createElement('script');
-      script.src = 'https://pinky-promise-web-staging.web.app/build/web/flutter.js';
-      script.onload = function() {
-        console.log('Script loaded successfully');
+      console.log("Button clicked");
+
+      // Create a script element to load flutter.js
+      var script = document.createElement("script");
+      script.src = "https://pinky-promise-web-staging.web.app/flutter.js";
+      script.defer = true;
+
+      script.onload = function () {
+        console.log("Script loaded");
+
+        // Since the window load event might have already occurred, 
+        // directly proceed with initializing the Flutter app.
+        // Retrieve variables from local storage
+        var authToken = localStorage.getItem('authToken');
+        var userId = localStorage.getItem('userId');
+
+        // Load the main.dart.js
+        _flutter.loader.loadEntrypoint({
+          serviceWorker: null, // Disable service worker
+          onEntrypointLoaded: function (engineInitializer) {
+            engineInitializer.initializeEngine().then(function (appRunner) {
+              appRunner.runApp();
+
+              // Send variables to the Flutter app
+              window.postMessage({
+                action: 'setVariables',
+                authToken: authToken,
+                userId: userId,
+              }, '*');
+
+              // Optionally hide UI elements like the navigation bar and back button
+              window.postMessage({
+                action: 'hideUI',
+              }, '*');
+            });
+          },
+        });
       };
+
       script.onerror = function() {
-        console.error('Error loading script');
+        console.error("Failed to load the script.");
       };
+
       document.head.appendChild(script);
     });
 

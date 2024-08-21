@@ -11,65 +11,6 @@
   <button id="sendMessageButton">Send Message to Flutter</button>
 
   <script>
-    /*
-    document.getElementById('sendMessageButton').addEventListener('click', function() {
-      console.log("button clicked");
-      // Open a new window with the Flutter app URL
-    var script = document.createElement("script");
-    script.src = "https://pinky-promise-web-staging.web.app/build/web/flutter.js";
-    script.defer = true;
-    console.log("script created");
-
-    script.onload = function () {
-      console.log("script loaded");
-      window.addEventListener("load", function (ev) {
-        console.log("on load listener called");
-        // Retrieve variables from local storage
-        var authToken = localStorage.getItem('authToken');
-        var userId = localStorage.getItem('userId');
-
-        // Load the main.dart.js
-        _flutter.loader.loadEntrypoint({
-          serviceWorker: {
-            serviceWorkerVersion: null,
-          },
-          onEntrypointLoaded: function (engineInitializer) {
-            engineInitializer.initializeEngine().then(function (appRunner) {
-              appRunner.runApp();
-
-              // Send variables to the Flutter app
-              window.postMessage({
-                action: 'setVariables',
-                authToken: authToken,
-                userId: userId,
-              }, '*');
-
-              // Optionally hide UI elements like the navigation bar and back button
-              window.postMessage({
-                action: 'hideUI',
-              }, '*');
-            });
-          },
-        });
-      });
-      };
-
-      document.head.appendChild(script);
-    });
-    */
-
-    // document.getElementById('sendMessageButton').addEventListener('click', function() {
-    //   var script = document.createElement('script');
-    //   script.src = 'https://pinky-promise-web-staging.web.app/build/web/flutter.js';
-    //   script.onload = function() {
-    //     console.log('Script loaded successfully');
-    //   };
-    //   script.onerror = function() {
-    //     console.error('Error loading script');
-    //   };
-    //   document.head.appendChild(script);
-    // });
-
     document.getElementById('sendMessageButton').addEventListener('click', function() {
       console.log("Button clicked");
 
@@ -108,17 +49,7 @@
                 refreshToken: refreshToken,
                 userId: userId,
               }, '*');
-            }, 10000);
-
-              // Send variables to the Flutter app
-              
-
-              console.log("post message");
-
-              // Optionally hide UI elements like the navigation bar and back button
-              window.postMessage({
-                action: 'hideUI',
-              }, '*');
+            }, 10);
             });
           },
         });
@@ -130,62 +61,6 @@
 
       document.head.appendChild(script);
     });
-
-    
-    /*document.getElementById('sendMessageButton').addEventListener('click', function() {
-      // Open a new window with the Flutter app URL
-      var newWindow = window.open("https://pinky-promise-web-staging.web.app", '_blank');
-
-      if (newWindow) {
-        console.log("NEW WINDOWWWW");
-        newWindow.onload = function() {
-          // Create a script element to load flutter.js in the new window
-          console.log("IN ONLOAD FUNCTION");
-          var script = newWindow.document.createElement("script");
-          script.src = "https://pinky-promise-web-staging.web.app/build/web/flutter.js";
-          script.defer = true;
-          console.log("SCRIPT LOADED");
-
-          script.onload = function () {
-            console.log("ONLOAD OF SCRIPT");
-            newWindow.addEventListener("load", function () {
-              console.log("LOAD EVENT LISTENER");
-              _flutter.loader.loadEntrypoint({
-                serviceWorker: {
-                  serviceWorkerVersion: null,
-                },
-                onEntrypointLoaded: function (engineInitializer) {
-                  engineInitializer.initializeEngine().then(function (appRunner) {
-                    appRunner.runApp();
-                    console.log("Flutter app initialized in new window");
-                    
-                    // Send a message to the Flutter app
-                    setTimeout(() => {
-                      newWindow.postMessage({
-                        action: 'external_embed',
-                        accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MWU2MzgzZS01YjVlLTQyMDMtOTRkMC0zN2JhNjgyZjViNjEiLCJpYXQiOjE3MjQxMzYxMTEsImV4cCI6MTcyNDEzNjE3MX0.Pe82RfscGiK3BIIm_0k5IGXaRc2Zf36o_9FiY6Pv7q0',
-                        refreshToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MWU2MzgzZS01YjVlLTQyMDMtOTRkMC0zN2JhNjgyZjViNjEiLCJpYXQiOjE3MjQxMzYxMTEsImV4cCI6MTc4NzIwODExMX0.bY7Bni0UR9amtV_kCMtwU3NNTT3M751Qh7q1SOrv3B8',
-                        userId: '41e6383e-5b5e-4203-94d0-37ba682f5b61'
-                      }, '*');
-                      console.log("Message sent to Flutter app in new window");
-                    }, 10000); // Adjust the timeout as necessary
-                  });
-                },
-              });
-            });
-          };
-
-          newWindow.document.head.appendChild(script);
-        };
-
-        newWindow.onerror = function () {
-          console.error('Error opening or interacting with the new window.');
-        };
-      } else {
-        console.error('Failed to open the new window.');
-      }
-    });
-    */
     
   </script>
 

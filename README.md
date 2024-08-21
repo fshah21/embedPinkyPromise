@@ -7,6 +7,7 @@ Note: this is a staging endpoint. We will need to replace this before we go live
 
 ## Request body : 
 
+```
 {
     "phoneNumber": {
         "countryCode": "+91",
@@ -15,9 +16,11 @@ Note: this is a staging endpoint. We will need to replace this before we go live
     "organization": "GOODGLAMMGROUP",
     "apiKey": "shared api key encrypted using a public key"
 }
+```
 
 ## Response : 
 
+```
 {
     "status": 200,
     "message": "Logged in successfully.",
@@ -57,6 +60,7 @@ Note: this is a staging endpoint. We will need to replace this before we go live
         }
     }
 }
+```
 
 Need to send userId, refreshToken, accessToken (returned from this API call) and action="external_embed" while sending a message to the flutter app. 
 These variables help us to directly open the conversation or doctor chat that the patient was on.

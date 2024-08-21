@@ -1,4 +1,5 @@
-URL to create a user [POST] : https://asia-south1-mimetic-maxim-371511.cloudfunctions.net/userservice/api/v2/users/createUserForOrganization [staging url]
+URL to create a user : 
+[POST] : https://asia-south1-mimetic-maxim-371511.cloudfunctions.net/userservice/api/v2/users/createUserForOrganization [staging url]
 
 Request body : 
 

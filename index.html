@@ -41,12 +41,15 @@
               console.log("then asset");
               appRunner.runApp();
               console.log("run app");
-              window.postMessage({
+
+              setTimeout(function() {
+                window.postMessage({
                 action: 'external_embed',
                 accessToken: accessToken,
                 refreshToken: refreshToken,
                 userId: userId,
               }, '*');
+            }, 10000);
             });
           },
         });

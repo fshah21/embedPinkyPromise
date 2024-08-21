@@ -1,7 +1,11 @@
-URL to create a user : 
-[POST] : https://asia-south1-mimetic-maxim-371511.cloudfunctions.net/userservice/api/v2/users/createUserForOrganization [staging url]
+# Steps to call Pinky Promise flutter app
 
-Request body : 
+Please refer to the script attached to this repo for how to call our flutter app from your website. 
+## URL to create a user : 
+[POST] : https://asia-south1-mimetic-maxim-371511.cloudfunctions.net/userservice/api/v2/users/createUserForOrganization [staging url]
+Note: this is a staging endpoint. We will need to replace this before we go live.
+
+## Request body : 
 
 {
     "phoneNumber": {
@@ -12,7 +16,7 @@ Request body :
     "apiKey": "shared api key encrypted using a public key"
 }
 
-Response : 
+## Response : 
 
 {
     "status": 200,
@@ -55,4 +59,5 @@ Response :
 }
 
 Need to send userId, refreshToken, accessToken (returned from this API call) and action="external_embed" while sending a message to the flutter app. 
+These variables help us to directly open the conversation or doctor chat that the patient was on.
 

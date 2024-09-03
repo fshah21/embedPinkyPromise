@@ -40,6 +40,7 @@
           entrypointUrl: "https://pinky-promise-web-staging.web.app/main.dart.js?action=external_embed",
           serviceWorker: null, // Disable service worker
           onEntrypointLoaded: function (engineInitializer) {
+            var assetBaseUrl = "https://pinky-promise-web-staging.web.app/";
             engineInitializer
               .initializeEngine()
               .then(function (appRunner) {

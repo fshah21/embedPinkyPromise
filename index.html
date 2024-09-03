@@ -19,6 +19,12 @@
       script.src = "https://pinky-promise-web-staging.web.app/flutter.js";
       script.defer = true;
 
+      var currentUrl = window.location.href;
+      if (!currentUrl.includes("embed=true")) {
+        var separator = currentUrl.includes("?") ? "&" : "?";
+        window.history.replaceState({}, document.title, currentUrl + separator + "embed=true");
+      }
+
       script.onload = function () {
         console.log("Script loaded");
 
@@ -33,27 +39,29 @@
         _flutter.loader.loadEntrypoint({
           entrypointUrl: "https://pinky-promise-web-staging.web.app/main.dart.js?action=external_embed",
           serviceWorker: null, // Disable service worker
-          onEntrypointLoaded: function (engineInitializer) {
-            var assetBaseUrl = "https://pinky-promise-web-staging.web.app/";
-            engineInitializer.initializeEngine({
-              assetBase: assetBaseUrl
-            }).then(function (appRunner) {
-              console.log("then asset");
-              appRunner.runApp();
-              console.log("run app");
-
-              setTimeout(function() {
-                window.postMessage({
-                action: 'external_embed',
-                accessToken: accessToken,
-                refreshToken: refreshToken,
-                userId: userId,
-              }, '*');
-            }, 10000);
-            });
-          },
+          onEntrypointLoaded: sendMessageToFlutterApp()
         });
       };
+
+      function sendMessageToFlutterApp() {
+        window.addEventListener("message", function (event) {
+          if (event.data.flutterReady) {
+            console.log("Flutter is ready, sending message...");
+            window.postMessage(
+              {
+                action: "external_embed",
+                accessToken:
+                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MWU2MzgzZS01YjVlLTQyMDMtOTRkMC0zN2JhNjgyZjViNjEiLCJpYXQiOjE3MjQxMzYxMTEsImV4cCI6MTcyNDEzNjE3MX0.Pe82RfscGiK3BIIm_0k5IGXaRc2Zf36o_9FiY6Pv7q0",
+                refreshToken:
+                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI0MWU2MzgzZS01YjVlLTQyMDMtOTRkMC0zN2JhNjgyZjViNjEiLCJpYXQiOjE3MjQxMzYxMTEsImV4cCI6MTc4NzIwODExMX0.bY7Bni0UR9amtV_kCMtwU3NNTT3M751Qh7q1SOrv3B8",
+                userId: "41e6383e-5b5e-4203-94d0-37ba682f5b61",
+              },
+              "*"
+            );
+            console.log("Message sent to Flutter app");
+          }
+        });
+      }
 
       script.onerror = function() {
         console.error("Failed to load the script.");

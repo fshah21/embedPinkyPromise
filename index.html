@@ -41,20 +41,16 @@
           serviceWorker: null, // Disable service worker
           onEntrypointLoaded: function (engineInitializer) {
             var assetBaseUrl = "https://pinky-promise-web-staging.web.app/";
-            engineInitializer
-              .initializeEngine()
-              .then(function (appRunner) {
-                console.log("Engine initialized");
-                appRunner.runApp();
-                console.log("Flutter app initialized");
+            engineInitializer.initializeEngine({
+              assetBase: assetBaseUrl
+            }).then(function (appRunner) {
+              console.log("then asset");
+              appRunner.runApp();
+              console.log("run app");
 
-                // Now send the message to the Flutter app
-                sendMessageToFlutterApp();
-              })
-              .catch(function (error) {
-                console.error("Error initializing Flutter app:", error);
-              });
-          }
+              sendMessageToFlutterApp();
+            });
+          },
         });
       };
 

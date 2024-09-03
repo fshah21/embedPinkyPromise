@@ -20,9 +20,9 @@
       script.defer = true;
 
       var currentUrl = window.location.href;
-      if (!currentUrl.includes("embed=true")) {
+      if (!currentUrl.includes("action=external_embed")) {
         var separator = currentUrl.includes("?") ? "&" : "?";
-        window.history.replaceState({}, document.title, currentUrl + separator + "embed=true");
+        window.history.replaceState({}, document.title, currentUrl + separator + "action=external_embed");
       }
 
       script.onload = function () {

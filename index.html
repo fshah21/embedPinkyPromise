@@ -78,6 +78,10 @@
         console.error("Failed to load the script.");
       };
 
+      setTimeout(() => {
+        window.postMessage({ flutterReady: true }, "*");
+      }, 1000);
+
       document.head.appendChild(script);
     });
     

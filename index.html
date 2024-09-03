@@ -39,7 +39,21 @@
         _flutter.loader.loadEntrypoint({
           entrypointUrl: "https://pinky-promise-web-staging.web.app/main.dart.js?action=external_embed",
           serviceWorker: null, // Disable service worker
-          onEntrypointLoaded: sendMessageToFlutterApp()
+          onEntrypointLoaded: function (engineInitializer) {
+            engineInitializer
+              .initializeEngine()
+              .then(function (appRunner) {
+                console.log("Engine initialized");
+                appRunner.runApp();
+                console.log("Flutter app initialized");
+
+                // Now send the message to the Flutter app
+                sendMessageToFlutterApp();
+              })
+              .catch(function (error) {
+                console.error("Error initializing Flutter app:", error);
+              });
+          }
         });
       };
 

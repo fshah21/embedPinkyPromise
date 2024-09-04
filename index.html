@@ -19,6 +19,12 @@
       script.src = "https://pinky-promise-web-staging.web.app/flutter.js";
       script.defer = true;
 
+      var currentUrl = window.location.href;
+      if (!currentUrl.includes("action=external_embed")) {
+        var separator = currentUrl.includes("?") ? "&" : "?";
+        window.history.replaceState({}, document.title, currentUrl + separator + "action=external_embed");
+      }
+
       script.onload = function () {
         console.log("Script loaded");
 
@@ -42,22 +48,37 @@
               appRunner.runApp();
               console.log("run app");
 
-              setTimeout(function() {
-                window.postMessage({
-                action: 'external_embed',
-                accessToken: accessToken,
-                refreshToken: refreshToken,
-                userId: userId,
-              }, '*');
-            }, 10000);
+              sendMessageToFlutterApp();
             });
           },
         });
       };
 
+      function sendMessageToFlutterApp() {
+        window.addEventListener("message", function (event) {
+          if (event.data.flutterReady) {
+            console.log("Flutter is ready, sending message...");
+            window.postMessage(
+              {
+                action: "external_embed",
+                accessToken : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyY2E5YTgxYi00YTY0LTQ0YTUtYWJlZC0xYjEwNmZkMWU2ZTYiLCJpYXQiOjE3MjQ2NjUyNTYsImV4cCI6MTcyNDY2NTMxNn0.Amc4RFn9X_ognDxzHOZo9zm6AYfyBlzRlyFABCkz7Xo",
+                refreshToken : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyY2E5YTgxYi00YTY0LTQ0YTUtYWJlZC0xYjEwNmZkMWU2ZTYiLCJpYXQiOjE3MjQ2NjUyNTYsImV4cCI6MTc4NzczNzI1Nn0.WaekDFijoiiJqjgoYHK1HvSm4iYpy4k9aRokO4d_y_c",
+                userId : "2ca9a81b-4a64-44a5-abed-1b106fd1e6e6",
+              },
+              "*"
+            );
+            console.log("Message sent to Flutter app");
+          }
+        });
+      }
+
       script.onerror = function() {
         console.error("Failed to load the script.");
       };
+
+      setTimeout(() => {
+        window.postMessage({ flutterReady: true }, "*");
+      }, 1000);
 
       document.head.appendChild(script);
     });

@@ -65,8 +65,3 @@ Note: this is a staging endpoint. We will need to replace this before we go live
 Need to send userId, refreshToken, accessToken (returned from this API call) and action="external_embed" while sending a message to the flutter app. 
 These variables help us to directly open the conversation or doctor chat that the patient was on.
 
-
-
-var accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyY2E5YTgxYi00YTY0LTQ0YTUtYWJlZC0xYjEwNmZkMWU2ZTYiLCJpYXQiOjE3MjQ2NjUyNTYsImV4cCI6MTcyNDY2NTMxNn0.Amc4RFn9X_ognDxzHOZo9zm6AYfyBlzRlyFABCkz7Xo";
-var refreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIyY2E5YTgxYi00YTY0LTQ0YTUtYWJlZC0xYjEwNmZkMWU2ZTYiLCJpYXQiOjE3MjQ2NjUyNTYsImV4cCI6MTc4NzczNzI1Nn0.WaekDFijoiiJqjgoYHK1HvSm4iYpy4k9aRokO4d_y_c";
-var userId = "2ca9a81b-4a64-44a5-abed-1b106fd1e6e6";

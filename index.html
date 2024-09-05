@@ -14,9 +14,11 @@
     document.getElementById('sendMessageButton').addEventListener('click', function() {
       console.log("Button clicked");
 
-      // Create a script element to load flutter.js
+      var cacheBuster = new Date().getTime();
+
+      // Create a script element to load flutter.js with a cache-busting parameter
       var script = document.createElement("script");
-      script.src = "https://pinky-promise-web-staging.web.app/flutter.js";
+      script.src = "https://pinky-promise-web-staging.web.app/flutter.js?v=" + cacheBuster;
       script.defer = true;
 
       script.onload = function () {
@@ -29,7 +31,7 @@
 
         // Load the main.dart.js
         _flutter.loader.loadEntrypoint({
-          entrypointUrl: "https://pinky-promise-web-staging.web.app/main.dart.js?action=external_embed",
+          entrypointUrl: "https://pinky-promise-web-staging.web.app/main.dart.js?action=external_embed&v=" + cacheBuster,
           serviceWorker: null, // Disable service worker
           onEntrypointLoaded: function (engineInitializer) {
             var assetBaseUrl = "https://pinky-promise-web-staging.web.app/";

@@ -2,7 +2,7 @@
 
 Please refer to the script attached to this repo for how to call our flutter app from your website. 
 ## URL to create a user : 
-[POST] : https://asia-south1-mimetic-maxim-371511.cloudfunctions.net/userservice/api/v2/users/createUserForOrganization [staging url]
+[POST] : https://asia-south1-pinky-promise-backend-core.cloudfunctions.net/userservice/api/v2/users/createUserForOrganization [staging url]
 Note: this is a staging endpoint. We will need to replace this before we go live.
 
 ## Request body : 

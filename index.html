@@ -16,52 +16,32 @@
 
       var cacheBuster = new Date().getTime();
 
-      // Create a script element to load flutter.js with a cache-busting parameter
-      var script = document.createElement("script");
-      script.src = "https://webapp.askpinkypromise.com/flutter.js?v=" + cacheBuster;
-      script.defer = true;
+      // Retrieve variables from local storage or set default values
+      var accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMDE1ZGQyYi0wMGFiLTQ0MDQtODM4Yy0yYzdhYWI4MWQzNGIiLCJpYXQiOjE3MjYyMzYxMjAsImV4cCI6MTcyODgyODEyMH0.HOTCyQlLj2pAk3Fcen7CDGF6n9XJZRal7hcvmIO_X3w";
+      var refreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMDE1ZGQyYi0wMGFiLTQ0MDQtODM4Yy0yYzdhYWI4MWQzNGIiLCJpYXQiOjE3MjYyMzYxMjAsImV4cCI6MTc4OTMwODEyMH0.jREp4q6hnuldA9h4TEhYqUKxEaReqmUxtyQtrJe9ppc";
+      var userId = "c015dd2b-00ab-4404-838c-2c7aab81d34b";
 
-      script.onload = function () {
-        console.log("Script loaded");
+      // Open a new window and load Flutter web app
+      var newWindow = window.open('https://webapp.askpinkypromise.com', '_blank');
 
-        // Retrieve variables from local storage or set default values
-        var accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMDE1ZGQyYi0wMGFiLTQ0MDQtODM4Yy0yYzdhYWI4MWQzNGIiLCJpYXQiOjE3MjYyMzYxMjAsImV4cCI6MTcyODgyODEyMH0.HOTCyQlLj2pAk3Fcen7CDGF6n9XJZRal7hcvmIO_X3w";
-        var refreshToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjMDE1ZGQyYi0wMGFiLTQ0MDQtODM4Yy0yYzdhYWI4MWQzNGIiLCJpYXQiOjE3MjYyMzYxMjAsImV4cCI6MTc4OTMwODEyMH0.jREp4q6hnuldA9h4TEhYqUKxEaReqmUxtyQtrJe9ppc";
-        var userId = "c015dd2b-00ab-4404-838c-2c7aab81d34b";
+      // Poll until the new window is fully loaded and then send the message
+      var sendMessage = function() {
+        if (newWindow) {
+          console.log("Sending message to the new Flutter window...");
 
-        // Load the main.dart.js
-        _flutter.loader.loadEntrypoint({
-          entrypointUrl: "https://webapp.askpinkypromise.com/main.dart.js?action=external_embed&v=" + cacheBuster,
-          serviceWorker: null, // Disable service worker
-          onEntrypointLoaded: function (engineInitializer) {
-            var assetBaseUrl = "https://webapp.askpinkypromise.com/";
-            engineInitializer.initializeEngine({
-              assetBase: assetBaseUrl
-            }).then(function (appRunner) {
-              console.log("Flutter engine initialized");
-              appRunner.runApp();
-              console.log("Flutter app is running");
-
-              // Send message to Flutter after ensuring the app is running
-              setTimeout(function() {
-                console.log("Sending message to Flutter app...");
-                window.postMessage({
-                  action: 'external_embed',
-                  accessToken: accessToken,
-                  refreshToken: refreshToken,
-                  userId: userId,
-                }, '*');
-              }, 100); // Adjust the delay if necessary
-            });
-          },
-        });
+          newWindow.postMessage({
+            action: 'external_embed',
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            userId: userId,
+          }, 'https://webapp.askpinkypromise.com');
+        } else {
+          console.error("Failed to open the new window.");
+        }
       };
 
-      script.onerror = function() {
-        console.error("Failed to load the Flutter script.");
-      };
-
-      document.head.appendChild(script);
+      // Use a delay to ensure the new window has time to load
+      setTimeout(sendMessage, 1000);  // Adjust delay if necessary
     });
   </script>
 

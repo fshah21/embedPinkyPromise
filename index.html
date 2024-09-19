@@ -22,7 +22,7 @@
       var userId = "c015dd2b-00ab-4404-838c-2c7aab81d34b";
 
       // Open a new window and load Flutter web app
-      var newWindow = window.open('https://pinky-promise-web-staging.web.app', '_blank');
+      var newWindow = window.open('https://pinky-promise-web-staging.web.app?source=thesirona', '_blank');
 
       // Poll until the new window is fully loaded and then send the message
       var sendMessage = function() {
@@ -34,7 +34,7 @@
             accessToken: accessToken,
             refreshToken: refreshToken,
             userId: userId,
-          }, 'https://pinky-promise-web-staging.web.app');
+          }, 'https://pinky-promise-web-staging.web.app?source=thesirona');
         } else {
           console.error("Failed to open the new window.");
         }
